@@ -1,14 +1,12 @@
 ENTRY(loader)
-OUTPUT_FORMAT(elf64-x86-64)
+OUTPUT_FORMAT(elf32-i386)
+OUTPUT_ARCH(i386:i386)
 
 SECTIONS{
     . = 0x0100000;
 
-    .multiboot : {
-        *(.multiboot)
-    }
-
     .text : {
+        *(.multiboot)
         *(.text*)
         *(.rodata)
     }
@@ -18,6 +16,7 @@ SECTIONS{
         KEEP(*( .init_array ));
         KEEP(*(SORT_BY_INIT_PRIORITY( .init_array.*)));
         end_ctors = .;
+        
         *(.data)
     }
 
